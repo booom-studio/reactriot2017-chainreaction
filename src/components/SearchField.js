@@ -2,20 +2,17 @@ import React, { Component } from 'react';
 import { InputGroup, Glyphicon } from 'react-bootstrap';
 
 export default class SearchField extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: ''
-    };
-  }
+  state = {
+    search: ''
+  };
 
-  handleChange(event) {
+  handleChange = (event) => {
     const search = event.target.value;
     this.handleSearch(search);
     this.setState({search});
   }
 
-  handleSearch(search) {
+  handleSearch = (search) => {
     search = search === undefined ? this.state.search : search;
     console.log(`Searching for "${search}"...`); // TODO
   }
@@ -26,7 +23,7 @@ export default class SearchField extends Component {
         <Glyphicon glyph='search' />
       </InputGroup.Addon>
       <input type='text'
-             onChange={this.handleChange.bind(this)}
+             onChange={this.handleChange}
              className='form-control' placeholder='Search' />
     </InputGroup>;
   }

@@ -13,6 +13,7 @@ class UserBadgeSet extends React.Component {
 
   render() {
     const {
+      namespace,
       badgeSetId,
       skills = {},
       categories = {},
@@ -47,7 +48,7 @@ class UserBadgeSet extends React.Component {
 
     return (
       <div>
-        <h4><Link to={`/badge-sets/${badgeSetId}`}>{badgeSet.name}</Link></h4>
+        <h4><Link to={`/${namespace}/badge-sets/${badgeSetId}`}>{badgeSet.name}</Link></h4>
         <BadgeSet badges={badgeData} />
       </div>
     );
@@ -56,6 +57,7 @@ class UserBadgeSet extends React.Component {
 
 const mapStateToProps = ({ firebase, app: { namespace } }) => {
   return {
+    namespace,
     skills: dataToJS(firebase, `/${namespace}/skills`),
     categories: dataToJS(firebase, `/${namespace}/categories`),
     badges: dataToJS(firebase, `/${namespace}/badges`),

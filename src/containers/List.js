@@ -11,20 +11,6 @@ import { Grid, Col, Row } from 'react-bootstrap';
 import TopNavigation from '../components/TopNavigation';
 
 class List extends Component {
-  static propTypes = {
-    namespace: PropTypes.string.isRequired
-  };
-
-  componentWillReceiveProps(nextProps) {
-    if(this.props.namespace !== nextProps.namespace) {
-      this.props.namespaceChange(nextProps.namespace);
-    }
-  }
-
-  componentWillMount() {
-    this.props.namespaceChange(this.props.namespace);
-  }
-
   render() {
     const badgeSetIds = Object.keys(this.props.badgeSets || []);
     // const badgeSets = badgeSetIds.map(key => ({key, ...this.props.badgeSets[key]}));
@@ -54,7 +40,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(List);
-export default firebaseConnect(({ namespace }) => [
-  `/${namespace}`
-])(ConnectedApp);
+export default connect(mapStateToProps, mapDispatchToProps)(List);

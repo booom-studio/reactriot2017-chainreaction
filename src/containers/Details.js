@@ -30,6 +30,4 @@ const mapStateToProps = ({firebase}, {match}) => ({
   badgeSet: dataToJS(firebase, `/${dataNamespace}/badge-sets/${match.params.badgeSetId}`)
 });
 
-export default firebaseConnect(({match}) => [
-    `/${dataNamespace}`
-])(connect(mapStateToProps, dispatch => ({}))(BadgeSetDetails));
+export default connect(mapStateToProps, dispatch => ({}))(BadgeSetDetails);
