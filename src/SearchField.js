@@ -11,7 +11,7 @@ export default class SearchField extends Component {
 
   handleChange(event) {
     const search = event.target.value;
-    if (event.key === 'Enter') this.handleSearch(search);
+    this.handleSearch(search);
     this.setState({search});
   }
 
@@ -22,15 +22,12 @@ export default class SearchField extends Component {
 
   render() {
     return <InputGroup>
+      <InputGroup.Addon onClick={() => this.handleSearch()}>
+        <Glyphicon glyph='search' />
+      </InputGroup.Addon>
       <input type='text'
-             onKeyPress={this.handleChange.bind(this)}
+             onChange={this.handleChange.bind(this)}
              className='form-control' placeholder='Search' />
-      <span className='input-group-btn'
-            onClick={() => this.handleSearch()}>
-              <Button>
-                <Glyphicon glyph='search' />
-              </Button>
-            </span>
     </InputGroup>;
   }
 }
