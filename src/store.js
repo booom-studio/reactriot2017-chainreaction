@@ -3,13 +3,17 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 import { routerMiddleware } from 'react-router-redux'
 import { history } from '.'
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import { getFirebaseConfig } from './firebase'
 
 const initialState = {};
 const middlewares = [
-  thunk,
+  thunk.withExtraArgument(getFirebase),
   routerMiddleware(history)
 ];
-const enhancers = [];
+const enhancers = [
+  reactReduxFirebase(getFirebaseConfig(), {})
+];
 
 // devtools
 if (process.env.NODE_ENV === 'development') {

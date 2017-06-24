@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { firebaseConnect, dataToJS } from 'react-redux-firebase';
+
 import { connect } from 'react-redux'
 
 class App extends Component {
@@ -20,6 +22,9 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = ({firebase}) => ({
+  skills: dataToJS(firebase, '/badge-system/skills'),
+  categories: dataToJS(firebase, '/badge-system/categories')
+});
 const mapDispatchToProps = dispatch => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default firebaseConnect('/badge-system')(connect(mapStateToProps, mapDispatchToProps)(App));
