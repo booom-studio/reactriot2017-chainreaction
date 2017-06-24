@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import PropTypes from 'prop-types';
 
 import { firebaseConnect, dataToJS } from 'react-redux-firebase';
 
 import { connect } from 'react-redux'
+
+import { Grid, Col, Row } from 'react-bootstrap';
+import TopNavigation from './TopNavigation';
 
 class App extends Component {
   static propTypes = {
@@ -14,17 +16,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to {this.props.dataNamespace}</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <ul>
-          {Object.values(this.props.skills || []).map(skill => <li key={skill.name}>{skill.name}</li>)}
-        </ul>
+      <div>
+        <TopNavigation />
+        <Grid>
+          <Col md={12}>
+            <Row>
+              <h1>H1 for hello!</h1>
+            </Row>
+          </Col>
+        </Grid>
       </div>
     );
   }
