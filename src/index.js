@@ -17,9 +17,9 @@ ReactDOM.render(<Provider store={store}>
   <ConnectedRouter history={history}>
     <Switch>
       <Route path='/react-riot'
-             render={() => <App dataNamespace='react-riot' />} />
+             render={() => <App namespace='react-riot' />} />
       <Route path='/'
-             render={() => <App dataNamespace='badge-system' />} />
+             render={() => <App namespace='badge-system' />} />
     </Switch>
   </ConnectedRouter>
 </Provider>, document.getElementById('root'));
