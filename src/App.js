@@ -35,6 +35,9 @@ const mapStateToProps = ({firebase}, {dataNamespace}) => ({
   categories: dataToJS(firebase, `/${dataNamespace}/categories`)
 });
 const mapDispatchToProps = dispatch => ({});
-export default firebaseConnect(({dataNamespace}) => `/${dataNamespace}`)(
+export default firebaseConnect(({dataNamespace}) => [
+  `/${dataNamespace}/categories`,
+  `/${dataNamespace}/skills`
+])(
     connect(mapStateToProps, mapDispatchToProps)(App));
 
