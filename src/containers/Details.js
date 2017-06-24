@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Row, Col, Glyphicon } from 'react-bootstrap';
 
 import UserBadgeSet from './UserBadgeSet';
+import Skills from './Skills';
 
 class BadgeSetDetails extends Component {
   render() {
@@ -25,9 +26,8 @@ class BadgeSetDetails extends Component {
   }
 }
 
-const dataNamespace = 'badge-system'; // TODO: unmock me!!!!1
-const mapStateToProps = ({firebase}, {match}) => ({
-  badgeSet: dataToJS(firebase, `/${dataNamespace}/badge-sets/${match.params.badgeSetId}`)
+const mapStateToProps = ({firebase, app: {namespace}}, {match}) => ({
+  badgeSet: dataToJS(firebase, `/${namespace}/badge-sets/${match.params.badgeSetId}`)
 });
 
 export default connect(mapStateToProps, dispatch => ({}))(BadgeSetDetails);
