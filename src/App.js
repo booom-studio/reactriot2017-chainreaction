@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { firebaseConnect } from 'react-redux-firebase';
-import map from 'lodash.map';
+import { firebaseConnect, dataToJS } from 'react-redux-firebase';
 import { connect } from 'react-redux'
 
 import { namespaceChange } from './actions';
@@ -28,30 +27,35 @@ class App extends Component {
   }
 
   render() {
-    const {
-      namespace
-    } = this.props;
-
+    const badgeSetKeys = Object.keys(this.props.badgeSets || []);
+    // const badgeSets = badgeSetKeys.map(key => ({key, ...this.props.badgeSets[key]}));
     return (
       <div>
         <TopNavigation />
         <Grid>
-          <Col md={12}>
-            <Row>
-            	  <UserBadgeSet badgeSetId='badge-set-1' />
-              <h1>H1 for hello!</h1>
-            </Row>
-          </Col>
+          <Row>
+            {badgeSetKeys.map(badgeSetKey => (
+                <Col key={badgeSetKey} md={2} sm={2} xs={6}>
+                  <UserBadgeSet badgeSetId={badgeSetKey} />
+                </Col>
+            ))}
+          </Row>
         </Grid>
+      </div>
     );
   }
 }
 
+const mapStateToProps = ({firebase, app: { namespace }}) => ({
+  badgeSets: dataToJS(firebase, `/${namespace}/badge-sets`)
+});
 const mapDispatchToProps = dispatch => ({
   namespaceChange: namespace => {
     dispatch(namespaceChange(namespace));
   }
 });
 
-const ConnectedApp = connect(null, mapDispatchToProps)(App);
-export default firebaseConnect(({ namespace }) => `/${namespace}`)(ConnectedApp);
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+export default firebaseConnect(({ namespace }) => [
+  `/${namespace}`
+])(ConnectedApp);

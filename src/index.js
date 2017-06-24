@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import BadgeSetDetails from './BadgeSetDetails';
+
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
@@ -16,6 +18,8 @@ export const history = createBrowserHistory();
 ReactDOM.render(<Provider store={store}>
   <ConnectedRouter history={history}>
     <Switch>
+      <Route path='/badge-sets/:badgeSetKey'
+             component={BadgeSetDetails} />
       <Route path='/react-riot'
              render={() => <App namespace='react-riot' />} />
       <Route path='/'
