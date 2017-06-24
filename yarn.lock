@@ -3829,6 +3829,10 @@ lodash.defaults@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+
 lodash.map@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
@@ -4998,6 +5002,12 @@ react-prop-types@^0.4.0:
   dependencies:
     warning "^3.0.0"
 
+react-highcharts@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/react-highcharts/-/react-highcharts-12.0.0.tgz#a7c8b5f5b56b37afe8e7fe02ec8bee72e376158a"
+  dependencies:
+    highcharts "^5.0.0"
+
 react-redux-firebase@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-1.4.2.tgz#29d0774f232f7535160b2784624a61d6fff9afb0"
@@ -5008,12 +5018,6 @@ react-redux-firebase@^1.4.2:
     immutable "^3.8.1"
     jwt-decode "^2.2.0"
     lodash "^4.17.4"
-
-react-highcharts@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/react-highcharts/-/react-highcharts-12.0.0.tgz#a7c8b5f5b56b37afe8e7fe02ec8bee72e376158a"
-  dependencies:
-    highcharts "^5.0.0"
 
 react-redux@^5.0.5:
   version "5.0.5"
