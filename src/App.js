@@ -1,43 +1,57 @@
 import React, { Component } from 'react';
-import './App.css';
 import PropTypes from 'prop-types';
-
-import { firebaseConnect, dataToJS } from 'react-redux-firebase';
-
+import { firebaseConnect } from 'react-redux-firebase';
+import map from 'lodash.map';
 import { connect } from 'react-redux'
+
+import { namespaceChange } from './actions';
+
+import UserBadgeSet from './containers/UserBadgeSet';
+
 
 import { Grid, Col, Row } from 'react-bootstrap';
 import TopNavigation from './TopNavigation';
 
 class App extends Component {
   static propTypes = {
-    dataNamespace: PropTypes.string.isRequired
+    namespace: PropTypes.string.isRequired
   };
 
+  componentWillReceiveProps(nextProps) {
+    if(this.props.namespace !== nextProps.namespace) {
+      this.props.namespaceChange(nextProps.namespace);
+    }
+  }
+
+  componentWillMount() {
+    this.props.namespaceChange(this.props.namespace);
+  }
+
   render() {
+    const {
+      namespace
+    } = this.props;
+
     return (
       <div>
         <TopNavigation />
         <Grid>
           <Col md={12}>
             <Row>
+            	  <UserBadgeSet badgeSetId='badge-set-1' />
               <h1>H1 for hello!</h1>
             </Row>
           </Col>
         </Grid>
-      </div>
     );
   }
 }
 
-const mapStateToProps = ({firebase}, {dataNamespace}) => ({
-  skills: dataToJS(firebase, `/${dataNamespace}/skills`),
-  categories: dataToJS(firebase, `/${dataNamespace}/categories`)
+const mapDispatchToProps = dispatch => ({
+  namespaceChange: namespace => {
+    dispatch(namespaceChange(namespace));
+  }
 });
-const mapDispatchToProps = dispatch => ({});
-export default firebaseConnect(({dataNamespace}) => [
-  `/${dataNamespace}/categories`,
-  `/${dataNamespace}/skills`
-])(
-    connect(mapStateToProps, mapDispatchToProps)(App));
 
+const ConnectedApp = connect(null, mapDispatchToProps)(App);
+export default firebaseConnect(({ namespace }) => `/${namespace}`)(ConnectedApp);
