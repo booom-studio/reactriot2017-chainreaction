@@ -27,16 +27,16 @@ class App extends Component {
   }
 
   render() {
-    const badgeSetKeys = Object.keys(this.props.badgeSets || []);
-    // const badgeSets = badgeSetKeys.map(key => ({key, ...this.props.badgeSets[key]}));
+    const badgeSetIds = Object.keys(this.props.badgeSets || []);
+    // const badgeSets = badgeSetIds.map(key => ({key, ...this.props.badgeSets[key]}));
     return (
       <div>
         <TopNavigation />
         <Grid>
           <Row>
-            {badgeSetKeys.map(badgeSetKey => (
-                <Col key={badgeSetKey} md={2} sm={2} xs={6}>
-                  <UserBadgeSet badgeSetId={badgeSetKey} />
+            {badgeSetIds.map(badgeSetId => (
+                <Col key={badgeSetId} md={2} sm={2} xs={6}>
+                  <UserBadgeSet badgeSetId={badgeSetId} />
                 </Col>
             ))}
           </Row>

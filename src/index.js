@@ -18,7 +18,7 @@ export const history = createBrowserHistory();
 ReactDOM.render(<Provider store={store}>
   <ConnectedRouter history={history}>
     <Switch>
-      <Route path='/badge-sets/:badgeSetKey'
+      <Route path='/badge-sets/:badgeSetId'
              component={BadgeSetDetails} />
       <Route path='/react-riot'
              render={() => <App namespace='react-riot' />} />

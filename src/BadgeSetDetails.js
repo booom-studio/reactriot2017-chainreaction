@@ -8,7 +8,7 @@ import UserBadgeSet from './containers/UserBadgeSet';
 
 class BadgeSetDetails extends Component {
   render() {
-    const badgeSetId = this.props.match.params.badgeSetKey;
+    const badgeSetId = this.props.match.params.badgeSetId;
     console.log('BadgeSetDetails for', badgeSetId, this.props.badgeSet);
     return this.props.badgeSet ?
         <Grid>
@@ -28,7 +28,7 @@ class BadgeSetDetails extends Component {
 
 const dataNamespace = 'badge-system'; // TODO: unmock me!!!!1
 const mapStateToProps = ({firebase}, {match}) => ({
-  badgeSet: dataToJS(firebase, `/${dataNamespace}/badge-sets/${match.params.badgeSetKey}`)
+  badgeSet: dataToJS(firebase, `/${dataNamespace}/badge-sets/${match.params.badgeSetId}`)
 });
 
 export default firebaseConnect(({match}) => [
