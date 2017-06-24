@@ -4,12 +4,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { Grid, Row, Col, Glyphicon } from 'react-bootstrap';
 
-import UserBadgeSet from './containers/UserBadgeSet';
+import UserBadgeSet from './UserBadgeSet';
 
 class BadgeSetDetails extends Component {
   render() {
     const badgeSetId = this.props.match.params.badgeSetId;
-    console.log('BadgeSetDetails for', badgeSetId, this.props.badgeSet);
     return this.props.badgeSet ?
         <Grid>
           <Row>

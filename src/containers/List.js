@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import { firebaseConnect, dataToJS } from 'react-redux-firebase';
 import { connect } from 'react-redux'
 
-import { namespaceChange } from './actions';
+import { namespaceChange } from '../actions';
 
-import UserBadgeSet from './containers/UserBadgeSet';
-
+import UserBadgeSet from './UserBadgeSet';
 
 import { Grid, Col, Row } from 'react-bootstrap';
-import TopNavigation from './TopNavigation';
+import TopNavigation from '../components/TopNavigation';
 
-class App extends Component {
+class List extends Component {
   static propTypes = {
     namespace: PropTypes.string.isRequired
   };
@@ -55,7 +54,7 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(List);
 export default firebaseConnect(({ namespace }) => [
   `/${namespace}`
 ])(ConnectedApp);

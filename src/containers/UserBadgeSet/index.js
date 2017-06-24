@@ -55,7 +55,6 @@ class UserBadgeSet extends React.Component {
 }
 
 const mapStateToProps = ({ firebase, app: { namespace } }) => {
-  console.log('mapStateToProps', namespace);
   return {
     skills: dataToJS(firebase, `/${namespace}/skills`),
     categories: dataToJS(firebase, `/${namespace}/categories`),

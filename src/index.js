@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import BadgeSetDetails from './BadgeSetDetails';
+import List from './containers/List';
+import Details from './containers/Details';
 
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
@@ -19,11 +19,11 @@ ReactDOM.render(<Provider store={store}>
   <ConnectedRouter history={history}>
     <Switch>
       <Route path='/badge-sets/:badgeSetId'
-             component={BadgeSetDetails} />
+             component={Details} />
       <Route path='/react-riot'
-             render={() => <App namespace='react-riot' />} />
+             render={() => <List namespace='react-riot' />} />
       <Route path='/'
-             render={() => <App namespace='badge-system' />} />
+             render={() => <List namespace='badge-system' />} />
     </Switch>
   </ConnectedRouter>
 </Provider>, document.getElementById('root'));

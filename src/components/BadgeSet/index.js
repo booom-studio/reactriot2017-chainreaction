@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Highcharts from 'react-highcharts';
-import { connect } from 'react-redux';
-import { firebaseConnect, dataToJS } from 'react-redux-firebase';
 import isEqual from 'lodash.isequal';
 
 import getHighchartsSeriesConfig from './getHighchartsSeriesConfig';
