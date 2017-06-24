@@ -15,7 +15,9 @@ export const history = createBrowserHistory();
 
 ReactDOM.render(<Provider store={store}>
   <ConnectedRouter history={history}>
-    <Route exact path="/" component={App} />
+    <Route exact path="/">
+      <App dataNamespace='badge-system' />
+    </Route>
   </ConnectedRouter>
 </Provider>, document.getElementById('root'));
 
