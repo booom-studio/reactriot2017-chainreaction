@@ -14,11 +14,11 @@ export default ({
     showsAll,
     earnedCategoryBadgeCount=0,
     earnedCategoryStarCount=0
-}) => <div className="panel-heading" style={{
+}) => <div className="SkillHeader panel-heading" style={{
   backgroundColor: category.color,
   color: blackOrWhiteOn(category.color)
 }}>
-    <span className='skillPanelHeader'>
+    <span className='SkillHeaderContent'>
       <span onClick={() => handleToggle(category.key)}>
         <Glyphicon glyph={`triangle-${isOpen ? 'top' : 'bottom'}`} style={{marginRight: 5}} />
         {category.name}
