@@ -1,0 +1,14 @@
+.rc-slider-handle {
+  border-color: red;
+}
+
+.rc-tooltip {
+  position: absolute;
+  z-index: 1070;
+  display: block;
+  visibility: visible;
+}
+
+.rc-tooltip-placement-bottom {
+  margin-left: 5px;
+}
