@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { dataToJS } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import reduce from 'lodash.reduce';
+import isEmpty from 'lodash.isempty';
+
 import BadgeSet from '../../components/BadgeSet';
 
 class UserBadgeSet extends React.Component {
@@ -30,7 +33,13 @@ class UserBadgeSet extends React.Component {
     }
 
     const badgeData = reduce(badgeSet.badgeIds, (badgeData, badgeId, idx) => {
-      const { description, value, skillId } = badges[badgeId];
+      const badge = badges[badgeId];
+
+      if(isEmpty(badge)) {
+        return badgeData;
+      }
+
+      const { description, value, skillId } = badge;
       const { name: skillName, categoryId } = skills[skillId];
       const { color } = categories[categoryId];
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Glyphicon, Collapse, Navbar } from 'react-bootstrap';
 import sortBy from 'lodash.sortby';
+import isEmpty from 'lodash.isempty';
+
 import { SkillContainer, SkillCategoryPanelHeader } from './skill';
 import './style.css';
 
@@ -34,7 +36,8 @@ export default class Skills extends Component {
   render() {
     const skills = Object.keys(this.props.skills || {}).map(key => ({key, ...this.props.skills[key]}));
     const badges = Object.keys(this.props.badges || {}).map(key => ({key, ...this.props.badges[key]}));
-    const earnedBadges = Object.values(this.props.badgeIds).map(badgeId => this.props.badges[badgeId]);
+    const earnedBadges = Object.values(this.props.badgeIds).map(badgeId => this.props.badges[badgeId])
+      .filter(badge => !isEmpty(badge));
     const earnedSkillIds = earnedBadges.map(badge => badge.skillId);
     const categories = Object.keys(this.props.categories || {}).map(key => {
       return {
