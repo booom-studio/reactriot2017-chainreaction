@@ -64,15 +64,22 @@ export default class Skills extends Component {
   render() {
     const categories = Object.keys(this.props.categories || {}).map(key => ({key, ...this.props.categories[key]}));
     const skills = Object.keys(this.props.skills || {}).map(key => ({key, ...this.props.skills[key]}));
-    // const earnedBadges = this.props.badgeIds.map(badgeId => this.props.badges[badgeId])
-    // const earnedSkills = earnedBadges.map(badge => badge.skillId);
+    const earnedBadges = this.props.badgeIds.map(badgeId => this.props.badges[badgeId]);
+    // const earnedSkillIds = earnedBadges.map(badge => badge.skillId);
     return <div>
       {categories.map((category) => {
         const categorySkills = skills.filter(skill => skill.categoryId === category.key);
+        const categorySkillIds = categorySkills.map(skill => skill.key)
+        const categoryBadges = earnedBadges.filter(badge => categorySkillIds.includes(badge.skillId));
         const isOpen =this.state.panelOpen[category.key];
         return <div className="panel panel-default">
           <div className="panel-heading" style={{backgroundColor: category.color}}>
-            {skillCategoryPanelHeader({category, handleToggle: this.handleToggle, isOpen })}
+            {skillCategoryPanelHeader({
+              category,
+              earnedCategoryBadgeCount: categorySkills.length,
+              earnedCategoryStarCount: categoryBadges.reduce((sum, {value}) => sum + value, 0),
+              handleToggle: this.handleToggle,
+              isOpen })}
           </div>
           <Collapse in={isOpen}>
             <div className="panel-body">
