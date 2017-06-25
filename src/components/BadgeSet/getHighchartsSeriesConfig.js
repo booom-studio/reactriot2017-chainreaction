@@ -12,8 +12,6 @@ export default (badges, { size: { inner, minHeight, maxHeight }}) => {
     max: -1
   });
 
-  console.log({ values });
-
   const count = Object.keys(badges).length;
   const width = 360 / count;
 

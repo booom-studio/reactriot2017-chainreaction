@@ -104,7 +104,6 @@ export default class BadgeSet extends React.Component {
 
     if(this.state.width) {
       const config = this.getChartConfig(this.props.badges);
-      console.log({ config, w: this.state.width - 40 });
       chart = <Highcharts ref={chart => { this.chart = chart }} config={config} />;
     }
 
