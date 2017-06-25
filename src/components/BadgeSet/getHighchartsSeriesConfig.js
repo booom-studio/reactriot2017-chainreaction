@@ -30,7 +30,7 @@ export default (badges, { size: { inner, minHeight, maxHeight }}) => {
       startAngle,
       endAngle: startAngle + width,
       type: 'pie',
-      innerSize: 100,
+      innerSize: inner,
       data: [{
         name: skillName,
         color,
