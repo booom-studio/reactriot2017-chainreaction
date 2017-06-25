@@ -7,6 +7,51 @@
   height: 80px;
 }
 
+/* Marks */
+.rc-slider-step, .rc-slider-dot-active {
+  border-color: inherit;
+}
+
+.rc-slider-dot {
+  bottom: -3px;
+  margin-left: -4px;
+  width: 10px;
+  height: 10px;
+  border-width: 5px;
+}
+
+.Slider.active .rc-slider-dot:first-child {
+  border: none;
+}
+
+.rc-slider-mark-text {
+  color: #ddd;
+}
+
+.rc-slider-mark, .rc-slider-mark-text-active {
+  color: inherit;
+}
+
+.Slider.active .rc-slider-dot {
+  width: 20px;
+  height: 20px;
+  border-width: 1px;
+  bottom: -8px;
+  margin-left: -10px;
+}
+
+.rc-slider-mark-text {
+  bottom: 2px;
+  font-size: 14px;
+}
+
+.rc-slider-mark-text-remove {
+  font-size: 10px;
+  line-height: 8px;
+  margin-left: 1px;
+  color: red;
+}
+
 /* Handle */
 
 .rc-slider-handle {
@@ -18,6 +63,7 @@
   box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.25);
   background-color: white;
   border: none;
+  z-index: 10;
 }
 
 .rc-slider-handle:active {
@@ -42,7 +88,7 @@
 
 .rc-tooltip {
   position: absolute;
-  z-index: 1070;
+  z-index: 100;
   display: block;
   visibility: visible;
   font-size: 12px;

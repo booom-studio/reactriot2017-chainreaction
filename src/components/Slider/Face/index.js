@@ -5,7 +5,7 @@ import './style.css';
 
 export default ({ color = 'black', collapsed = true, imgUrl }) => (
   <div className='Face'>
-    <Glyphicon style={{ color }} glyph="triangle-top" />
+    <Glyphicon style={{ color }} glyph='triangle-top' />
     { collapsed || <div className='photo' /> }
   </div>
 );

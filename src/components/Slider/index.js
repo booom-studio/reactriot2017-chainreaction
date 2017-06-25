@@ -42,15 +42,41 @@ export default class Slider extends React.Component {
     </Tooltip>
   )
 
+  marks = () => {
+    const { active, levelCount } = this.props;
+
+    if(!active) return {};
+
+    const levels = Array(levelCount).fill().map((_, idx) => idx + 1);
+    const marks = levels.reduce((acc, level) => ({
+      ...acc,
+      [level]: <span>{level}</span>
+    }), {});
+
+    return {
+      ...marks,
+      0: <span className='rc-slider-mark-text-remove'>&#x2715;</span>
+    };
+  }
+
   render() {
+    const { color } = this.props;
+
     return (
       <div className={classNames('Slider', { active: this.props.active })}>
         <RCSlider
-            onAfterChange={(newLevel) => {
-              this.props.onChange(newLevel, this.state.currentLevel);
-              this.setState({currentLevel: newLevel})
-            }}
-            min={0} max={this.props.levelCount} defaultValue={this.props.currentLevel} handle={this.handle} />
+          onAfterChange={(newLevel) => {
+            this.props.onChange(newLevel, this.state.currentLevel);
+            this.setState({currentLevel: newLevel})
+          }}
+          style={{ borderColor: color, color }}
+          trackStyle={{ backgroundColor: color }}
+          min={0}
+          max={this.props.levelCount}
+          defaultValue={this.props.currentLevel}
+          marks={this.marks()}
+          dots
+          handle={this.handle} />
       </div>
     );
   }
