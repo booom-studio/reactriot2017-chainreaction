@@ -7,7 +7,9 @@ import sortBy from 'lodash.sortby';
 const skillCategoryPanelHeader = ({
   category,
   handleToggle,
+  handleToggleShowAll,
   isOpen,
+  showsAll,
   earnedCategoryBadgeCount=0,
   earnedCategoryStarCount=0
 }) => <span className='skillPanelHeader'>
@@ -22,8 +24,9 @@ const skillCategoryPanelHeader = ({
     <Button type='button' bsSize={'sm'} className='skillPanelHeaderButton'>
       <Glyphicon glyph='plus' /> Add
     </Button>
-    <Button type='button' bsSize={'sm'} className='skillPanelHeaderButton'>
-      <Glyphicon glyph='tag' /> See all
+    <Button onClick={() => handleToggleShowAll(category.key)}
+        type='button' bsSize={'sm'} className='skillPanelHeaderButton'>
+      <Glyphicon glyph='tag' /> {showsAll ? 'See mine' : 'See all'}
     </Button>
   </span>
 </span>;
@@ -31,27 +34,39 @@ const skillCategoryPanelHeader = ({
 const skillContainer = ({
   skill,
   showsDetails,
+  showsAll,
+  isEarned,
   category,
   handleSelectSkillDetails=()=>{}
 }) => (
-    <div onClick={() => handleSelectSkillDetails(skill.key)}
-         key={skill.key}>
-      <strong>{JSON.stringify({skill}, null, 2)}</strong>
-      <Collapse in={!!showsDetails}>
-        <div>Details...</div>
-      </Collapse>
-    </div>
+    <Collapse in={showsAll || isEarned}>
+      <div onClick={() => handleSelectSkillDetails(skill.key)}
+           key={skill.key}>
+        <strong>{JSON.stringify({skill}, null, 2)}</strong>
+        <Collapse in={!!showsDetails}>
+          <div>Details...</div>
+        </Collapse>
+      </div>
+    </Collapse>
 );
 
 export default class Skills extends Component {
   state = {
     panelOpen: {},
+    panelShowsAll: {},
     activeSkillId: false
   };
 
   handleToggle = (key) => {
     this.setState({
       panelOpen: Object.assign({}, this.state.panelOpen, {[key]: !this.state.panelOpen[key]})
+    });
+  };
+
+  handleToggleShowAll = (key) => {
+    this.setState({
+      panelOpen: Object.assign({}, this.state.panelOpen, {[key]: true}),
+      panelShowsAll: Object.assign({}, this.state.panelShowsAll, {[key]: !this.state.panelShowsAll[key]})
     });
   };
 
@@ -65,6 +80,7 @@ export default class Skills extends Component {
     const skills = Object.keys(this.props.skills || {}).map(key => ({key, ...this.props.skills[key]}));
     const badges = Object.keys(this.props.badges || {}).map(key => ({key, ...this.props.badges[key]}));
     const earnedBadges = this.props.badgeIds.map(badgeId => this.props.badges[badgeId]);
+    const earnedSkillIds = earnedBadges.map(badge => badge.skillId);
     const categories = Object.keys(this.props.categories || {}).map(key => {
       return {
         key,
@@ -90,7 +106,9 @@ export default class Skills extends Component {
       {categories.map((category) => {
         const categorySkillIds = category.skills.map(skill => skill.key)
         const categoryBadges = earnedBadges.filter(badge => categorySkillIds.includes(badge.skillId));
-        const isOpen =this.state.panelOpen[category.key];
+        const isOpen = this.state.panelOpen[category.key];
+        const showsAll = this.state.panelShowsAll[category.key];
+        console.log('CATEGORY', category);
         return <div className="panel panel-default">
           <div className="panel-heading" style={{backgroundColor: category.color}}>
             {skillCategoryPanelHeader({
@@ -98,13 +116,17 @@ export default class Skills extends Component {
               earnedCategoryBadgeCount: category.skills.length,
               earnedCategoryStarCount: categoryBadges.reduce((sum, {value}) => sum + value, 0),
               handleToggle: this.handleToggle,
-              isOpen
+              handleToggleShowAll: this.handleToggleShowAll,
+              isOpen,
+              showsAll
             })}
           </div>
           <Collapse in={isOpen}>
             <div className="panel-body">
               {category.skills.map((skill, idx) => skillContainer({
                 skill,
+                showsAll,
+                isEarned: earnedSkillIds.includes(skill.key),
                 showsDetails: this.state.activeSkillId === skill.key,
                 handleSelectSkillDetails: this.handleSelectSkillDetails
               }))}
