@@ -28,9 +28,25 @@ const skillCategoryPanelHeader = ({
   </span>
 </span>;
 
+const skillContainer = ({
+  skill,
+  showsDetails,
+  category,
+  handleSelectSkillDetails=()=>{}
+}) => (
+    <div onClick={() => handleSelectSkillDetails(skill.key)}
+         key={skill.key}>
+      <strong>{JSON.stringify({skill}, null, 2)}</strong>
+      <Collapse in={!!showsDetails}>
+        <div>Details...</div>
+      </Collapse>
+    </div>
+);
+
 export default class Skills extends Component {
   state = {
-    panelOpen: {}
+    panelOpen: {},
+    activeSkillId: false
   };
 
   handleToggle = (key) => {
@@ -39,9 +55,17 @@ export default class Skills extends Component {
     });
   };
 
+  handleSelectSkillDetails = (skillId) => {
+    this.setState({
+      activeSkillId: skillId === this.state.activeSkillId ? false : skillId
+    });
+  };
+
   render() {
     const categories = Object.keys(this.props.categories || {}).map(key => ({key, ...this.props.categories[key]}));
     const skills = Object.keys(this.props.skills || {}).map(key => ({key, ...this.props.skills[key]}));
+    // const earnedBadges = this.props.badgeIds.map(badgeId => this.props.badges[badgeId])
+    // const earnedSkills = earnedBadges.map(badge => badge.skillId);
     return <div>
       {categories.map((category) => {
         const categorySkills = skills.filter(skill => skill.categoryId === category.key);
@@ -52,7 +76,11 @@ export default class Skills extends Component {
           </div>
           <Collapse in={isOpen}>
             <div className="panel-body">
-              <ul>{categorySkills.map((s, idx) => <li key={idx}>{JSON.stringify(s, null, 2)}</li>)}</ul>
+              {categorySkills.map((skill, idx) => skillContainer({
+                skill,
+                showsDetails: this.state.activeSkillId === skill.key,
+                handleSelectSkillDetails: this.handleSelectSkillDetails
+              }))}
             </div>
           </Collapse>
         </div>;

@@ -25,6 +25,7 @@ class BadgeSetDetails extends Component {
             <Col md={6} sm={6} xs={12}>
               <Skills skills={this.props.skills}
                       categories={this.props.categories}
+                      badgeIds={this.props.badgeSet.badgeIds}
                       badges={this.props.badges}
               />
             </Col>
