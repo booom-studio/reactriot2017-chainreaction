@@ -42,7 +42,7 @@ describe('getHighchartsSeriesConfig', () => {
         color: '#f00',
         y: 5
       }],
-      size: 157,
+      size: 120,
       startAngle: -60,
       endAngle: 60,
       type: 'pie',
@@ -55,7 +55,7 @@ describe('getHighchartsSeriesConfig', () => {
         color: '#a00',
         y: 10
       }],
-      size: 194,
+      size: 177,
       startAngle: 60,
       endAngle: 180,
       type: 'pie',
@@ -68,7 +68,7 @@ describe('getHighchartsSeriesConfig', () => {
         color: '#0f0',
         y: 12
       }],
-      size: 208,
+      size: 200,
       startAngle: 180,
       endAngle: 300,
       type: 'pie',
