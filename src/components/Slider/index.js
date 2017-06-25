@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RCSlider, { Handle }  from 'rc-slider';
 import Tooltip from 'rc-tooltip';
-import 'rc-slider/assets/index.css';
+import classNames from 'classnames';
 
+import 'rc-slider/assets/index.css';
 import './style.css';
 
 import Face from './Face';
@@ -38,7 +39,7 @@ export default class Slider extends React.Component {
     const wrapperStyle = { width: 400, margin: 50 };
 
     return (
-      <div className='Slider'>
+      <div className={classNames('Slider', { active: this.props.active })}>
         <RCSlider min={0} max={this.props.levelCount} defaultValue={this.props.currentLevel} handle={this.handle} />
       </div>
     );

@@ -1,14 +1,57 @@
-.rc-slider-handle {
-  border-color: red;
+.Slider {
+  height: 34px;
+  padding-top: 4px;
 }
+
+.Slider.active {
+  height: 80px;
+}
+
+/* Handle */
+
+.rc-slider-handle {
+  position: absolute;
+  margin-left: -10px;
+  margin-top: -8px;
+  width: 20px;
+  height: 20px;
+  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  border: none;
+}
+
+.rc-slider-handle:active {
+  box-shadow: 0 0px 2px 1px rgba(0, 0, 0, 0.25);
+}
+
+.rc-slider-handle:after {
+  content: "||||";
+  height: 12px;
+  position: absolute;
+  top: 2px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #ddd;
+  overflow: hidden;
+  font-family: serif;
+  letter-spacing: 0;
+}
+
+/* Tooltip */
 
 .rc-tooltip {
   position: absolute;
   z-index: 1070;
   display: block;
   visibility: visible;
+  font-size: 12px;
 }
 
 .rc-tooltip-placement-bottom {
   margin-left: 5px;
+}
+
+.rc-tooltip-content {
+  margin-top: -3px;
 }
