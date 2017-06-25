@@ -10,6 +10,8 @@ import Skills from './Skills';
 class BadgeSetDetails extends Component {
   render() {
     const badgeSetId = this.props.match.params.badgeSetId;
+    // const badgeIds = this.props.badgeSet ? this.props.badgeSet.badgeIds : [];
+    // badges where skillId in this.props.skills.map(x => x.id)
     return this.props.badgeSet ?
         <Grid>
           <Row>
@@ -20,6 +22,12 @@ class BadgeSetDetails extends Component {
               <span>{this.props.badgeSet.name}</span>
               <UserBadgeSet badgeSetId={badgeSetId} />
             </Col>
+            <Col md={6} sm={6} xs={12}>
+              <Skills skills={this.props.skills}
+                      categories={this.props.categories}
+                      badges={this.props.badges}
+              />
+            </Col>
           </Row>
         </Grid> :
         <div>Loading...</div>;
@@ -27,7 +35,10 @@ class BadgeSetDetails extends Component {
 }
 
 const mapStateToProps = ({firebase, app: {namespace}}, {match}) => ({
-  badgeSet: dataToJS(firebase, `/${namespace}/badge-sets/${match.params.badgeSetId}`)
+  badgeSet: dataToJS(firebase, `/${namespace}/badge-sets/${match.params.badgeSetId}`),
+  badges: dataToJS(firebase, `/${namespace}/badges`),
+  skills: dataToJS(firebase, `/${namespace}/skills`),
+  categories: dataToJS(firebase, `/${namespace}/categories`),
 });
 
 export default connect(mapStateToProps, dispatch => ({}))(BadgeSetDetails);
