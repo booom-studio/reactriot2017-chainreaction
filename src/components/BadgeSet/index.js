@@ -15,7 +15,12 @@ export default class BadgeSet extends React.Component {
         skillName: PropTypes.string
       })
     ).isRequired,
-    photoUrl: PropTypes.string
+    photoUrl: PropTypes.string,
+    animate: PropTypes.bool
+  };
+
+  static defaultProps = {
+    animate: false
   };
 
   static nextId = 1;
@@ -84,6 +89,7 @@ export default class BadgeSet extends React.Component {
     },
     plotOptions: {
       pie: {
+        animation: this.props.animate,
         slicedOffset: 0,
         borderColor: 'black',
         borderWidth: 0,
