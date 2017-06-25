@@ -38,7 +38,8 @@ export default class Skills extends Component {
   render() {
     const skills = Object.keys(this.props.skills || {}).map(key => ({key, ...this.props.skills[key]}));
     const badges = Object.keys(this.props.badges || {}).map(key => ({key, ...this.props.badges[key]}));
-    const earnedBadges = Object.values(this.props.badgeSet.badgeIds).map(badgeId => this.props.badges[badgeId])
+    const earnedBadges = Object.values(this.props.badgeSet.badgeIds || {})
+        .map(badgeId => this.props.badges[badgeId])
       .filter(badge => !isEmpty(badge));
     const categories = Object.keys(this.props.categories || {}).map(key => {
       return {
@@ -53,7 +54,7 @@ export default class Skills extends Component {
 
     return (
       <div className='Skills'>
-        <Header profile='TODO: ALPACCA WHATEVER' badges={earnedBadges.length} stars={earnedStars} />
+        <Header profile={this.props.badgeSet.profile || ''} badges={earnedBadges.length} stars={earnedStars} />
         <div className='list'>
           { categories.map(category =>(
             <SkillCategory

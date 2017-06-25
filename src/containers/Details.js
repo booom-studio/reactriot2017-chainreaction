@@ -33,7 +33,6 @@ class BadgeSetDetails extends Component {
                 <Link to={`/`}>
                   <Glyphicon glyph='arrow-left' />
                 </Link>
-                <span>{this.props.badgeSet.name}</span>
                 <UserBadgeSet badgeSetId={badgeSetId} />
               </Panel>
               <Panel>
