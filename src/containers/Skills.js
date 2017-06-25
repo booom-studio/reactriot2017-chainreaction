@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Glyphicon, Collapse } from 'react-bootstrap';
+import { Button, Glyphicon, Collapse, Navbar, Nav, NavItem } from 'react-bootstrap';
 import './Skills.css';
 
-
+import sortBy from 'lodash.sortby';
 
 const skillCategoryPanelHeader = ({
   category,
@@ -62,32 +62,48 @@ export default class Skills extends Component {
   };
 
   render() {
-    const categories = Object.keys(this.props.categories || {}).map(key => ({key, ...this.props.categories[key]}));
     const skills = Object.keys(this.props.skills || {}).map(key => ({key, ...this.props.skills[key]}));
+    const badges = Object.keys(this.props.badges || {}).map(key => ({key, ...this.props.badges[key]}));
     const earnedBadges = this.props.badgeIds.map(badgeId => this.props.badges[badgeId]);
+    const categories = Object.keys(this.props.categories || {}).map(key => {
+      return {
+        key,
+        ...this.props.categories[key],
+        skills: skills.filter(skill => skill.categoryId === key).map(skill => Object.assign(skill, {
+          badges: sortBy(badges.filter(badge => badge.skillId === skill.key), 'value')
+        }))
+      };
+    });
     const earnedStars = earnedBadges.reduce((sum, {value}) => sum + value, 0);
     return <div>
-      <div>
-        <Glyphicon className='skillPanelHeaderGlyph' glyph='tag' /> {earnedBadges.length}
-        <Glyphicon className='skillPanelHeaderGlyph' glyph='star' /> {earnedStars}
-      </div>
+      <Navbar>
+        <Nav>
+          <Navbar.Text>
+            ALPACCA WHATEVER
+          </Navbar.Text>
+          <Navbar.Text>
+            <Glyphicon className='skillPanelHeaderGlyph' glyph='tag' /> {earnedBadges.length}
+            <Glyphicon className='skillPanelHeaderGlyph' glyph='star' /> {earnedStars}
+          </Navbar.Text>
+        </Nav>
+      </Navbar>
       {categories.map((category) => {
-        const categorySkills = skills.filter(skill => skill.categoryId === category.key);
-        const categorySkillIds = categorySkills.map(skill => skill.key)
+        const categorySkillIds = category.skills.map(skill => skill.key)
         const categoryBadges = earnedBadges.filter(badge => categorySkillIds.includes(badge.skillId));
         const isOpen =this.state.panelOpen[category.key];
         return <div className="panel panel-default">
           <div className="panel-heading" style={{backgroundColor: category.color}}>
             {skillCategoryPanelHeader({
               category,
-              earnedCategoryBadgeCount: categorySkills.length,
+              earnedCategoryBadgeCount: category.skills.length,
               earnedCategoryStarCount: categoryBadges.reduce((sum, {value}) => sum + value, 0),
               handleToggle: this.handleToggle,
-              isOpen })}
+              isOpen
+            })}
           </div>
           <Collapse in={isOpen}>
             <div className="panel-body">
-              {categorySkills.map((skill, idx) => skillContainer({
+              {category.skills.map((skill, idx) => skillContainer({
                 skill,
                 showsDetails: this.state.activeSkillId === skill.key,
                 handleSelectSkillDetails: this.handleSelectSkillDetails
