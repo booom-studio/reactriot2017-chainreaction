@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { firebaseConnect, dataToJS } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux'
 import { Route } from 'react-router'
 
@@ -34,4 +34,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const ConnectedApp = connect(null, mapDispatchToProps)(App);
-export default firebaseConnect(({match: {params: {namespace='badge-system'} }}, firebase) => [`/${namespace}`])(ConnectedApp);
+export default firebaseConnect(({
+  match: {
+    params: {
+      namespace = 'badge-system'
+    }
+  }
+}, firebase) => [`/${namespace}`])(ConnectedApp);

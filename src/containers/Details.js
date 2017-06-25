@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { firebaseConnect, dataToJS } from 'react-redux-firebase';
+import { dataToJS } from 'react-redux-firebase';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { Grid, Row, Col, Glyphicon } from 'react-bootstrap';

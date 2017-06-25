@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Glyphicon, Collapse, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Button, Glyphicon, Collapse, Navbar } from 'react-bootstrap';
 import './Skills.css';
 import Slider from '../components/Slider';
 import sortBy from 'lodash.sortby';
@@ -39,10 +39,11 @@ const skillContainer = ({
   color,
   handleSelectSkillDetails=()=>{}
 }) => {
-  return <Collapse in={showsAll || isEarned}>
-    <div key={skill.key} onClick={() => handleSelectSkillDetails(skill.key)}>
+  return <Collapse key={skill.key} in={showsAll || isEarned}>
+    <div onClick={() => handleSelectSkillDetails(skill.key)}>
       <strong>{skill.name}</strong>
       <Slider
+          currentLevel={1}
           levelCount={skill.badges.length}
           color={color}
           active={!!showsDetails}
@@ -94,7 +95,6 @@ export default class Skills extends Component {
     const earnedStars = earnedBadges.reduce((sum, {value}) => sum + value, 0);
     return <div>
       <Navbar>
-        <Nav>
           <Navbar.Text>
             ALPACCA WHATEVER
           </Navbar.Text>
@@ -102,14 +102,13 @@ export default class Skills extends Component {
             <Glyphicon className='skillPanelHeaderGlyph' glyph='tag' /> {earnedBadges.length}
             <Glyphicon className='skillPanelHeaderGlyph' glyph='star' /> {earnedStars}
           </Navbar.Text>
-        </Nav>
       </Navbar>
       {categories.map((category) => {
-        const categorySkillIds = category.skills.map(skill => skill.key)
+        const categorySkillIds = category.skills.map(skill => skill.key);
         const categoryBadges = earnedBadges.filter(badge => categorySkillIds.includes(badge.skillId));
         const isOpen = this.state.panelOpen[category.key];
         const showsAll = this.state.panelShowsAll[category.key];
-        return <div className="panel panel-default">
+        return <div key={category.key} className="panel panel-default">
           <div className="panel-heading" style={{backgroundColor: category.color}}>
             {skillCategoryPanelHeader({
               category,
