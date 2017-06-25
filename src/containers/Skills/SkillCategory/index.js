@@ -88,7 +88,8 @@ export default class SkillCategory extends React.Component {
                   isEarned={earnedSkillIds.includes(skill.key)}
                   showsDetails={activeSkillId === skill.key}
                   updateSkillLevel={updateSkillLevel}
-                  handleSelectSkillDetails={() => { onActivatedSkillChanged(skill.key) }}/>
+                  handleSelectSkillDetails={() => { onActivatedSkillChanged(skill.key) }}
+                  photoUrl={badgeSet.photoUrl} />
               );
             })
           }

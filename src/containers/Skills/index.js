@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import sortBy from 'lodash.sortby';
 import isEmpty from 'lodash.isempty';
+import isEqual from 'lodash.isequal';
 
 import SkillCategory from './SkillCategory';
 import Header from './Header';
@@ -11,23 +12,14 @@ import './style.css';
 export default class Skills extends Component {
   state = {
     badgeSet: {},
-    panelOpen: {},
-    panelShowsAll: {},
     activeSkillId: null
   };
 
-  handleToggle = (key) => {
-    this.setState({
-      panelOpen: Object.assign({}, this.state.panelOpen, {[key]: !this.state.panelOpen[key]})
-    });
-  };
-
-  handleToggleShowAll = (key) => {
-    this.setState({
-      panelOpen: Object.assign({}, this.state.panelOpen, {[key]: true}),
-      panelShowsAll: Object.assign({}, this.state.panelShowsAll, {[key]: !this.state.panelShowsAll[key]})
-    });
-  };
+  componentWillReceiveProps(nextProps) {
+    if(!isEqual(this.props.badgeSet.name, nextProps.badgeSet.name)) {
+      this.setState({ activeSkillId: null });
+    }
+  }
 
   handleSelectSkillDetails = (skillId) => {
     this.setState({

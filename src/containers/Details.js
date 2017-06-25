@@ -39,7 +39,7 @@ class BadgeSetDetails extends Component {
                 <Row>
                   {Object.keys(this.props.badgeSets).map(otherBadgeSetId =>
                       otherBadgeSetId !== badgeSetId ?
-                          <Col md={3} sm={4} xs={4}>
+                          <Col key={otherBadgeSetId} md={3} sm={4} xs={4}>
                             <UserBadgeSet badgeSetId={otherBadgeSetId} />
                           </Col>  : ''
                   )}

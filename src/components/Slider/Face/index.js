@@ -3,9 +3,9 @@ import { Glyphicon } from 'react-bootstrap';
 
 import './style.css';
 
-export default ({ color = 'black', collapsed = true, imgUrl }) => (
+export default ({ color = 'black', collapsed = true, photoUrl }) => (
   <div className='Face'>
     <Glyphicon style={{ color }} glyph='triangle-top' />
-    { collapsed || <div className='photo' /> }
+    { (collapsed && photoUrl) || <img className='photo' src={photoUrl} /> }
   </div>
 );

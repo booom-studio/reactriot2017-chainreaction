@@ -9,6 +9,18 @@ export default class ListItem extends React.Component {
     level: 0
   };
 
+  componentWillMount() {
+    this.setState({ level: this.getSkillLevel() })
+  }
+
+  getSkillLevel = () => {
+    return 1 + (
+      this.props.skill.badges
+          .map(b => b.key)
+          .findIndex(skillBadgeId => (this.props.badgeIds || []).includes(skillBadgeId)) || 0
+      );
+  }
+
   render() {
     const {
       skill,
@@ -18,14 +30,11 @@ export default class ListItem extends React.Component {
       isEarned,
       color,
       updateSkillLevel,
-      handleSelectSkillDetails=()=>{}
+      handleSelectSkillDetails=()=>{},
+      photoUrl
     } = this.props;
 
-    const skillLevel = 1 + (
-      skill.badges
-          .map(b => b.key)
-          .findIndex(skillBadgeId => (badgeIds || []).includes(skillBadgeId)) || 0
-      );
+    const skillLevel = this.getSkillLevel();
 
     const style = {
       backgroundColor: showsDetails ? Color(color).alpha(.1) : 'white'
@@ -55,6 +64,7 @@ export default class ListItem extends React.Component {
             levelCount={skill.badges.length}
             color={color}
             active={!!showsDetails}
+            photoUrl={photoUrl}
           />
           { (showsDetails && this.state.level) && (
             <div className='SkillDescription'>

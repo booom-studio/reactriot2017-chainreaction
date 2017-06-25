@@ -58,22 +58,6 @@ export default class BadgeSet extends React.Component {
     this.setState({ width: rect.width });
   }
 
-  componentWillReceiveProps(nextProps) {
-    // if(!isEqual(this.props.badges, nextProps.badges)) {
-    //   const chart = this.chart.getChart();
-
-    //   console.log({ chart });
-
-    //   const config = this.getChartConfig(nextProps.badges);
-
-    //   chart.series.map((series, idx) => {
-    //     const newSeries = config.series[idx];
-    //     series.update(newSeries, true);
-    //     series.setData(newSeries.data);
-    //   });
-    // }
-  }
-
   getChartConfig = badges => ({
     series: getHighchartsSeriesConfig(badges, {
       size: {

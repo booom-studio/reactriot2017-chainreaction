@@ -22,6 +22,7 @@ export default class Slider extends React.Component {
     currentLevel: PropTypes.number.isRequired,
     color: PropTypes.string.isRequired,
     active: PropTypes.bool,
+    photoUrl: PropTypes.string,
 
     onChange: PropTypes.func,
     onAfterChange: PropTypes.func,
@@ -36,7 +37,7 @@ export default class Slider extends React.Component {
 
   handle = ({ value, dragging, index, ...restProps }) => (
     <Tooltip
-      overlay={() => <Face color={this.props.color} collapsed={!this.props.active} />}
+      overlay={() => <Face color={this.props.color} collapsed={!this.props.active} photoUrl={this.props.photoUrl} />}
       placement='bottom'
       key={index}
       visible={this.props.active}
