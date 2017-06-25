@@ -18,8 +18,38 @@ export default class BadgeSet extends React.Component {
     photoUrl: PropTypes.string
   };
 
+  static nextId = 1;
+  state = {
+    width: null
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.id = `chart-${this.constructor.nextId++}`;
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
-    return !isEqual(this.props.badges, nextProps.badges);
+    if(!isEqual(this.props.badges, nextProps.badges) ||
+      this.state.width !== nextState.width) {
+      return true;
+    }
+
+    return false;
+  }
+
+  componentDidMount() {
+    this.updateChartWidth();
+    window.addEventListener('resize', this.updateChartWidth);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateChartWidth);
+  }
+
+  updateChartWidth = () => {
+    const rect = this.container.getBoundingClientRect();
+    this.setState({ width: rect.width });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,18 +71,20 @@ export default class BadgeSet extends React.Component {
   getChartConfig = badges => ({
     series: getHighchartsSeriesConfig(badges, {
       size: {
-        inner: 100,
-        minHeight: 120,
-        maxHeight: 200
+        inner: this.state.width - 50,
+        minHeight: this.state.width - 40,
+        maxHeight: this.state.width
       }
     }),
     chart: {
-      width: 400,
-      height: 400,
+      renderTo: this.id,
+      width: this.state.width,
+      height: this.state.width + 10,
       backgroundColor: 'transparent'
     },
     plotOptions: {
       pie: {
+        slicedOffset: 0,
         borderColor: 'black',
         borderWidth: 0,
         dataLabels: { enabled: false },
@@ -68,10 +100,18 @@ export default class BadgeSet extends React.Component {
   })
 
   render() {
-    const config = this.getChartConfig(this.props.badges);
+    let chart = null;
+
+    if(this.state.width) {
+      const config = this.getChartConfig(this.props.badges);
+      console.log({ config, w: this.state.width - 40 });
+      chart = <Highcharts ref={chart => { this.chart = chart }} config={config} />;
+    }
 
     return (
-      <Highcharts ref={chart => { this.chart = chart }} config={config} />
+      <div id={this.id} ref={container => { this.container = container } } >
+        {chart}
+      </div>
     );
   }
 }
