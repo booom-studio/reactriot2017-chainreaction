@@ -9,7 +9,7 @@ export default class TopNavigation extends Component {
     return <Navbar>
       <Navbar.Header>
         <Navbar.Brand>
-          <Link to="/">React devs, unite !!1</Link>
+          <Link to="/">Leaderboard</Link>
         </Navbar.Brand>
       </Navbar.Header>
       <ul className="nav navbar-nav pull-right">

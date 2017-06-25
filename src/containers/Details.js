@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { dataToJS } from 'react-redux-firebase';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { Grid, Row, Col, Glyphicon } from 'react-bootstrap';
+import { Grid, Row, Col, Panel, Glyphicon } from 'react-bootstrap';
 
 import UserBadgeSet from './UserBadgeSet';
 import Skills from './Skills/index';
@@ -29,11 +29,21 @@ class BadgeSetDetails extends Component {
         <Grid>
           <Row>
             <Col md={6} sm={6} xs={12}>
-              <Link to={`/`}>
-                <Glyphicon glyph='arrow-left' />
-              </Link>
-              <span>{this.props.badgeSet.name}</span>
-              <UserBadgeSet badgeSetId={badgeSetId} />
+              <Panel>
+                <Link to={`/`}>
+                  <Glyphicon glyph='arrow-left' />
+                </Link>
+                <span>{this.props.badgeSet.name}</span>
+                <UserBadgeSet badgeSetId={badgeSetId} />
+              </Panel>
+              <Panel>
+                {Object.keys(this.props.badgeSets).map(otherBadgeSetId =>
+                    otherBadgeSetId !== badgeSetId ?
+                        <Col md={3} sm={4} xs={4}>
+                          <UserBadgeSet badgeSetId={otherBadgeSetId} />
+                        </Col> : ''
+                )}
+              </Panel>
             </Col>
             <Col md={6} sm={6} xs={12}>
               <Skills updateSkillLevel={this.updateSkillLevel}
@@ -51,6 +61,7 @@ class BadgeSetDetails extends Component {
 
 const mapStateToProps = ({firebase, app: {namespace}}, {match}) => ({
   namespace,
+  badgeSets: dataToJS(firebase, `/${namespace}/badge-sets`),
   badgeSet: dataToJS(firebase, `/${namespace}/badge-sets/${match.params.badgeSetId}`),
   badges: dataToJS(firebase, `/${namespace}/badges`),
   skills: dataToJS(firebase, `/${namespace}/skills`),

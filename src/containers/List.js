@@ -11,6 +11,11 @@ import { namespaceChange } from '../actions';
 import UserBadgeSet from './UserBadgeSet';
 import TopNavigation from '../components/TopNavigation';
 
+export const ListItem = ({badgeSetId}) => (
+    <Col key={badgeSetId} md={2} sm={2} xs={6}>
+      <UserBadgeSet badgeSetId={badgeSetId} />
+    </Col>
+);
 
 class List extends React.Component {
   state = { normalizedFilter: '' };
@@ -26,14 +31,10 @@ class List extends React.Component {
 
     return (
       <div>
-        <TopNavigation onSearch={this.onSearch}/>
+        <TopNavigation onSearch={this.onSearch} />
         <Grid>
           <Row>
-            {map(pickBy(badgeSets, this.pickBy), (badgeSet, id) => (
-              <Col key={id} md={2} sm={2} xs={6}>
-                <UserBadgeSet badgeSetId={id} />
-              </Col>
-            ))}
+            {map(pickBy(badgeSets, this.pickBy), (v, id) => <ListItem badgeSetId={id} />)}
           </Row>
         </Grid>
       </div>
