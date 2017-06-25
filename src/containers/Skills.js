@@ -26,7 +26,7 @@ const skillCategoryPanelHeader = ({
     </Button>
     <Button onClick={() => handleToggleShowAll(category.key)}
         type='button' bsSize={'sm'} className='skillPanelHeaderButton'>
-      <Glyphicon glyph='tag' /> {showsAll ? 'See mine' : 'See all'}
+      <Glyphicon glyph='tag' /> {showsAll ? 'Hide unused' : 'See all skills'}
     </Button>
   </span>
 </span>;
@@ -108,12 +108,11 @@ export default class Skills extends Component {
         const categoryBadges = earnedBadges.filter(badge => categorySkillIds.includes(badge.skillId));
         const isOpen = this.state.panelOpen[category.key];
         const showsAll = this.state.panelShowsAll[category.key];
-        console.log('CATEGORY', category);
         return <div className="panel panel-default">
           <div className="panel-heading" style={{backgroundColor: category.color}}>
             {skillCategoryPanelHeader({
               category,
-              earnedCategoryBadgeCount: category.skills.length,
+              earnedCategoryBadgeCount: categoryBadges.length,
               earnedCategoryStarCount: categoryBadges.reduce((sum, {value}) => sum + value, 0),
               handleToggle: this.handleToggle,
               handleToggleShowAll: this.handleToggleShowAll,
