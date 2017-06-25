@@ -23,7 +23,7 @@ export default class SkillCategory extends React.Component {
   };
 
   state = {
-    isOpen: false,
+    isOpen: true,
     showAll: false
   };
 

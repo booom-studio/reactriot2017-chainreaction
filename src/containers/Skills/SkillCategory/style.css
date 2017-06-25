@@ -41,12 +41,15 @@
   padding: 17px 26px 10px;
 }
 
-.Skill.open {
-
-}
-
 .SkillTitle .glyphicon {
   font-size: 12px;
   padding-right: 8px;
   cursor: pointer;
+}
+
+.SkillDescription .well {
+  background-color: #fff;
+  border: solid 1px #ccc;
+  font-size: 18px;
+  font-family: 'Source Serif Pro', serif;
 }
