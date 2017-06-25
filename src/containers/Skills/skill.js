@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Slider from '../../components/Slider';
 import { Button, Glyphicon, Collapse } from 'react-bootstrap';
 
-export const skillContainer = ({
+export const SkillContainer = ({
     skill,
     showsDetails,
     showsAll,
@@ -23,7 +23,7 @@ export const skillContainer = ({
   </Collapse>
 };
 
-export const skillCategoryPanelHeader = ({
+export const SkillCategoryPanelHeader = ({
     category,
     handleToggle,
     handleToggleShowAll,

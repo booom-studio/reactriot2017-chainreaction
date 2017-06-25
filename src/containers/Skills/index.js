@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Glyphicon, Collapse, Navbar } from 'react-bootstrap';
 import sortBy from 'lodash.sortby';
-import { skillContainer, skillCategoryPanelHeader } from './skill';
+import { SkillContainer, SkillCategoryPanelHeader } from './skill';
 import './style.css';
 
 export default class Skills extends Component {
@@ -61,25 +61,25 @@ export default class Skills extends Component {
         const isOpen = this.state.panelOpen[category.key];
         const showsAll = this.state.panelShowsAll[category.key];
         return <div key={category.key} className="panel panel-default">
-          {skillCategoryPanelHeader({
-            category,
-            earnedCategoryBadgeCount: categoryBadges.length,
-            earnedCategoryStarCount: categoryBadges.reduce((sum, {value}) => sum + value, 0),
-            handleToggle: this.handleToggle,
-            handleToggleShowAll: this.handleToggleShowAll,
-            isOpen,
-            showsAll
-          })}
+          <SkillCategoryPanelHeader category={category}
+                                    earnedCategoryBadgeCount={categoryBadges.length}
+                                    earnedCategoryStarCount={
+                                      categoryBadges.reduce((sum, {value}) => sum + value, 0)}
+                                    handleToggle={this.handleToggle}
+                                    handleToggleShowAll={this.handleToggleShowAll}
+                                    isOpen={isOpen}
+                                    showsAll={showsAll}
+          />
           <Collapse in={isOpen}>
             <div className="panel-body">
-              {category.skills.map((skill, idx) => skillContainer({
-                color: category.color,
-                skill,
-                showsAll,
-                isEarned: earnedSkillIds.includes(skill.key),
-                showsDetails: this.state.activeSkillId === skill.key,
-                handleSelectSkillDetails: this.handleSelectSkillDetails
-              }))}
+              {category.skills.map((skill, idx) => (
+                  <SkillContainer color={category.color}
+                                  skill={skill}
+                                  showsAll={showsAll}
+                                  isEarned={earnedSkillIds.includes(skill.key)}
+                                  showsDetails={this.state.activeSkillId === skill.key}
+                                  handleSelectSkillDetails={this.handleSelectSkillDetails} />
+              ))}
             </div>
           </Collapse>
         </div>;
