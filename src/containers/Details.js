@@ -11,7 +11,7 @@ import Firebase from '../firebase';
 class BadgeSetDetails extends Component {
   updateSkillLevel = (skillId, {oldKey, newKey}) => {
     const badgeSetId = this.props.match.params.badgeSetId;
-    const badgeIds = this.props.badgeSet ? this.props.badgeSet.badgeIds : [];
+    const badgeIds = this.props.badgeSet ? this.props.badgeSet.badgeIds || [] : [];
     const ref = `/${this.props.namespace}/badge-sets/${badgeSetId}/badgeIds`;
 
     const skillBadgeIds = Object.keys(this.props.badges).filter(badgeId => (
