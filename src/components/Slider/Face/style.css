@@ -1,0 +1,15 @@
+.Face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Face .photo {
+  width: 42px;
+  height: 42px;
+  border: solid #bbc2cc 2px;
+  border-radius: 50%;
+  background: white;
+  margin-top: 5px;
+}
