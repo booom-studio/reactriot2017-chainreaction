@@ -4,6 +4,7 @@ import Highcharts from 'react-highcharts';
 import isEqual from 'lodash.isequal';
 
 import getHighchartsSeriesConfig from './getHighchartsSeriesConfig';
+import './style.css'
 
 export default class BadgeSet extends React.Component {
   static propTypes = {
@@ -76,8 +77,8 @@ export default class BadgeSet extends React.Component {
   getChartConfig = badges => ({
     series: getHighchartsSeriesConfig(badges, {
       size: {
-        inner: this.state.width - 50,
-        minHeight: this.state.width - 40,
+        inner: this.state.width / 2,
+        minHeight: this.state.width / 2 + 10,
         maxHeight: this.state.width
       }
     }),
@@ -114,7 +115,12 @@ export default class BadgeSet extends React.Component {
     }
 
     return (
-      <div id={this.id} ref={container => { this.container = container } } >
+      <div id={this.id}
+           className='badgeSetContainer'
+           ref={container => { this.container = container } } >
+        <img src={this.props.photoUrl}
+             width={this.state.width / 2}
+             className='badgeSetPhoto' />
         {chart}
       </div>
     );

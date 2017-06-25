@@ -1,0 +1,10 @@
+.badgeSetContainer {
+  position: relative;
+}
+
+.badgeSetPhoto {
+  top: 25%;
+  left: 25%;
+  position: absolute;
+  border-radius: 50%;
+}

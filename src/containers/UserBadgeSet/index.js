@@ -57,8 +57,10 @@ class UserBadgeSet extends React.Component {
 
     return (
       <div>
-        <h4><Link to={`/${namespace}/badge-sets/${badgeSetId}`}>{badgeSet.name}</Link></h4>
-        <BadgeSet badges={badgeData} />
+        <h4 style={{minHeight: 40}}>
+          <Link to={`/${namespace}/badge-sets/${badgeSetId}`}>{badgeSet.name}</Link>
+        </h4>
+        <BadgeSet badges={badgeData} photoUrl={badgeSet.photoUrl}/>
       </div>
     );
   }

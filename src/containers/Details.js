@@ -37,12 +37,14 @@ class BadgeSetDetails extends Component {
                 <UserBadgeSet badgeSetId={badgeSetId} />
               </Panel>
               <Panel>
-                {Object.keys(this.props.badgeSets).map(otherBadgeSetId =>
-                    otherBadgeSetId !== badgeSetId ?
-                        <Col md={3} sm={4} xs={4}>
-                          <UserBadgeSet badgeSetId={otherBadgeSetId} />
-                        </Col> : ''
-                )}
+                <Row>
+                  {Object.keys(this.props.badgeSets).map(otherBadgeSetId =>
+                      otherBadgeSetId !== badgeSetId ?
+                          <Col md={3} sm={4} xs={4}>
+                            <UserBadgeSet badgeSetId={otherBadgeSetId} />
+                          </Col>  : ''
+                  )}
+                </Row>
               </Panel>
             </Col>
             <Col md={6} sm={6} xs={12}>
