@@ -29,25 +29,16 @@ export default class Slider extends React.Component {
       overlay={() => <Face color={this.props.color} collapsed={!this.props.active} />}
       placement='bottom'
       key={index}
-      visible
+      visible={this.props.active}
     >
       <Handle value={value} {...restProps} />
     </Tooltip>
   )
 
   render() {
-    const wrapperStyle = { width: 400, margin: 50 };
-
     return (
       <div className={classNames('Slider', { active: this.props.active })}>
         <RCSlider min={0} max={this.props.levelCount} defaultValue={this.props.currentLevel} handle={this.handle} />
-      </div>
-    );
-
-
-    return (
-      <div style={{ backgroundColor: 'red'}}>
-      <RCSlider />
       </div>
     );
   }

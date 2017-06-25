@@ -48,6 +48,11 @@
   font-size: 12px;
 }
 
+.rc-tooltip.rc-tooltip-hidden {
+  display: none;
+  visibility: none;
+}
+
 .rc-tooltip-placement-bottom {
   margin-left: 5px;
 }
