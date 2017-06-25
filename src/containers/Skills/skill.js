@@ -7,17 +7,29 @@ const blackOrWhiteOn = (color) => Color(color).dark() ? 'white' : 'black';
 
 export const SkillContainer = ({
     skill,
+    badgeIds,
     showsDetails,
     showsAll,
     isEarned,
     color,
+    updateSkillLevel,
     handleSelectSkillDetails=()=>{}
 }) => {
+  const skillLevel = 1 + (
+      skill.badges
+          .map(b => b.key)
+          .findIndex(skillBadgeId => badgeIds.includes(skillBadgeId)) || 0
+      );
   return <Collapse key={skill.key} in={showsAll || isEarned}>
     <div onClick={() => handleSelectSkillDetails(skill.key)}>
       <strong>{skill.name}</strong>
       <Slider
-          currentLevel={1}
+          onChange={(newLevel, oldLevel) => {
+            const oldKey = (oldLevel > 0) && skill.badges[oldLevel - 1].key;
+            const newKey = (newLevel > 0) && skill.badges[newLevel - 1].key;
+            updateSkillLevel(skill.key, {oldKey, newKey});
+          }}
+          currentLevel={skillLevel}
           levelCount={skill.badges.length}
           color={color}
           active={!!showsDetails}
@@ -47,10 +59,6 @@ export const SkillCategoryPanelHeader = ({
       </span>
 
       <span>
-        <Button type='button' bsSize={'sm'}
-                className={`${blackOrWhiteOn(category.color)}SkillPanelHeaderButton`}>
-          <Glyphicon glyph='plus' /> Add
-        </Button>
         <Button onClick={() => handleToggleShowAll(category.key)}
                 type='button' bsSize={'sm'}
                 className={`${blackOrWhiteOn(category.color)}SkillPanelHeaderButton`}>
@@ -59,3 +67,9 @@ export const SkillCategoryPanelHeader = ({
       </span>
     </span>
 </div>;
+
+/*
+<Button type='button' bsSize={'sm'} className={`${blackOrWhiteOn(category.color)}SkillPanelHeaderButton`}>
+  <Glyphicon glyph='plus' /> Add
+</Button>
+ */

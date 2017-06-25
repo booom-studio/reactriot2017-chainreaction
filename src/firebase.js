@@ -1,6 +1,6 @@
-// import firebase from 'firebase';
-// export const client = firebase.initializeApp(getFirebaseConfig());
-// window.fbClient = client;
+import firebase from 'firebase';
+
+export default firebase.initializeApp(getFirebaseConfig());
 
 export function getFirebaseConfig() {
   return {

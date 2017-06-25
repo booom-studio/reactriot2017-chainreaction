@@ -10,6 +10,13 @@ import './style.css';
 import Face from './Face';
 
 export default class Slider extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentLevel: props.currentLevel
+    }
+  }
+
   static propTypes = {
     levelCount: PropTypes.number.isRequired,
     currentLevel: PropTypes.number.isRequired,
@@ -38,7 +45,12 @@ export default class Slider extends React.Component {
   render() {
     return (
       <div className={classNames('Slider', { active: this.props.active })}>
-        <RCSlider min={0} max={this.props.levelCount} defaultValue={this.props.currentLevel} handle={this.handle} />
+        <RCSlider
+            onAfterChange={(newLevel) => {
+              this.props.onChange(newLevel, this.state.currentLevel);
+              this.setState({currentLevel: newLevel})
+            }}
+            min={0} max={this.props.levelCount} defaultValue={this.props.currentLevel} handle={this.handle} />
       </div>
     );
   }

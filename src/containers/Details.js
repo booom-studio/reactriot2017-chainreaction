@@ -6,11 +6,24 @@ import { Grid, Row, Col, Glyphicon } from 'react-bootstrap';
 
 import UserBadgeSet from './UserBadgeSet';
 import Skills from './Skills/index';
+import Firebase from '../firebase';
 
 class BadgeSetDetails extends Component {
+  updateSkillLevel = (skillId, {oldKey, newKey}) => {
+    const badgeSetId = this.props.match.params.badgeSetId;
+    const badgeIds = this.props.badgeSet ? this.props.badgeSet.badgeIds : [];
+    const ref = `/${this.props.namespace}/badge-sets/${badgeSetId}/badgeIds`;
+
+    const skillBadgeIds = Object.keys(this.props.badges).filter(badgeId => (
+      this.props.badges[badgeId] || {}).skillId === skillId
+    );
+    const newBadgeIds = badgeIds.filter(badgeId => !skillBadgeIds.includes(badgeId)).concat([newKey]);
+    Firebase.database().ref(ref).set(newBadgeIds);
+  }
+
   render() {
     const badgeSetId = this.props.match.params.badgeSetId;
-    // const badgeIds = this.props.badgeSet ? this.props.badgeSet.badgeIds : [];
+    const badgeIds = this.props.badgeSet ? this.props.badgeSet.badgeIds : [];
     // badges where skillId in this.props.skills.map(x => x.id)
     return this.props.badgeSet ?
         <Grid>
@@ -23,9 +36,11 @@ class BadgeSetDetails extends Component {
               <UserBadgeSet badgeSetId={badgeSetId} />
             </Col>
             <Col md={6} sm={6} xs={12}>
-              <Skills skills={this.props.skills}
+              <Skills updateSkillLevel={this.updateSkillLevel}
+                      skills={this.props.skills}
                       categories={this.props.categories}
                       badgeIds={this.props.badgeSet.badgeIds}
+                      badgeSet={this.props.badgeSet}
                       badges={this.props.badges}
               />
             </Col>
@@ -36,6 +51,7 @@ class BadgeSetDetails extends Component {
 }
 
 const mapStateToProps = ({firebase, app: {namespace}}, {match}) => ({
+  namespace,
   badgeSet: dataToJS(firebase, `/${namespace}/badge-sets/${match.params.badgeSetId}`),
   badges: dataToJS(firebase, `/${namespace}/badges`),
   skills: dataToJS(firebase, `/${namespace}/skills`),

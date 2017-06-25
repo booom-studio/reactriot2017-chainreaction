@@ -6,6 +6,7 @@ import './style.css';
 
 export default class Skills extends Component {
   state = {
+    badgeSet: {},
     panelOpen: {},
     panelShowsAll: {},
     activeSkillId: false
@@ -33,7 +34,7 @@ export default class Skills extends Component {
   render() {
     const skills = Object.keys(this.props.skills || {}).map(key => ({key, ...this.props.skills[key]}));
     const badges = Object.keys(this.props.badges || {}).map(key => ({key, ...this.props.badges[key]}));
-    const earnedBadges = this.props.badgeIds.map(badgeId => this.props.badges[badgeId]);
+    const earnedBadges = Object.values(this.props.badgeIds).map(badgeId => this.props.badges[badgeId]);
     const earnedSkillIds = earnedBadges.map(badge => badge.skillId);
     const categories = Object.keys(this.props.categories || {}).map(key => {
       return {
@@ -74,10 +75,13 @@ export default class Skills extends Component {
             <div className="panel-body">
               {category.skills.map((skill, idx) => (
                   <SkillContainer color={category.color}
+                                  key={skill.key}
                                   skill={skill}
+                                  badgeIds={this.props.badgeIds}
                                   showsAll={showsAll}
                                   isEarned={earnedSkillIds.includes(skill.key)}
                                   showsDetails={this.state.activeSkillId === skill.key}
+                                  updateSkillLevel={this.props.updateSkillLevel}
                                   handleSelectSkillDetails={this.handleSelectSkillDetails} />
               ))}
             </div>

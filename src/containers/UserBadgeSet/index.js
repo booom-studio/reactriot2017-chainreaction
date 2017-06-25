@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { dataToJS } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import reduce from 'lodash.reduce';
 import BadgeSet from '../../components/BadgeSet';
 
 class UserBadgeSet extends React.Component {
@@ -29,7 +29,7 @@ class UserBadgeSet extends React.Component {
       );
     }
 
-    const badgeData = badgeSet.badgeIds.reduce((badgeData, badgeId, idx) => {
+    const badgeData = reduce(badgeSet.badgeIds, (badgeData, badgeId, idx) => {
       const { description, value, skillId } = badges[badgeId];
       const { name: skillName, categoryId } = skills[skillId];
       const { color } = categories[categoryId];
