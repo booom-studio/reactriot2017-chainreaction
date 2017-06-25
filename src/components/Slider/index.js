@@ -28,7 +28,9 @@ export default class Slider extends React.Component {
   };
 
   static defaultProps = {
-    active: false
+    active: false,
+    onChange: () => {},
+    onDelete: () => {}
   };
 
   handle = ({ value, dragging, index, ...restProps }) => (
