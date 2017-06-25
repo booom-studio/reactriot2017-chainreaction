@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Slider from '../../components/Slider';
 import { Button, Glyphicon, Collapse } from 'react-bootstrap';
+import Color from 'color';
+
+const blackOrWhiteOn = (color) => Color(color).dark() ? 'white' : 'black';
 
 export const SkillContainer = ({
     skill,
@@ -31,7 +34,10 @@ export const SkillCategoryPanelHeader = ({
     showsAll,
     earnedCategoryBadgeCount=0,
     earnedCategoryStarCount=0
-}) => <div className="panel-heading" style={{backgroundColor: category.color}}>
+}) => <div className="panel-heading" style={{
+  backgroundColor: category.color,
+  color: blackOrWhiteOn(category.color)
+}}>
     <span className='skillPanelHeader'>
       <span onClick={() => handleToggle(category.key)}>
         <Glyphicon glyph={`triangle-${isOpen ? 'top' : 'bottom'}`} style={{marginRight: 5}} />
@@ -41,11 +47,13 @@ export const SkillCategoryPanelHeader = ({
       </span>
 
       <span>
-        <Button type='button' bsSize={'sm'} className='skillPanelHeaderButton'>
+        <Button type='button' bsSize={'sm'}
+                className={`${blackOrWhiteOn(category.color)}SkillPanelHeaderButton`}>
           <Glyphicon glyph='plus' /> Add
         </Button>
         <Button onClick={() => handleToggleShowAll(category.key)}
-                type='button' bsSize={'sm'} className='skillPanelHeaderButton'>
+                type='button' bsSize={'sm'}
+                className={`${blackOrWhiteOn(category.color)}SkillPanelHeaderButton`}>
           <Glyphicon glyph='tag' /> {showsAll ? 'Hide unused' : 'See all skills'}
         </Button>
       </span>
