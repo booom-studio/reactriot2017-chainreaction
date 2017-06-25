@@ -65,8 +65,12 @@ export default class Skills extends Component {
     const categories = Object.keys(this.props.categories || {}).map(key => ({key, ...this.props.categories[key]}));
     const skills = Object.keys(this.props.skills || {}).map(key => ({key, ...this.props.skills[key]}));
     const earnedBadges = this.props.badgeIds.map(badgeId => this.props.badges[badgeId]);
-    // const earnedSkillIds = earnedBadges.map(badge => badge.skillId);
+    const earnedStars = earnedBadges.reduce((sum, {value}) => sum + value, 0);
     return <div>
+      <div>
+        <Glyphicon className='skillPanelHeaderGlyph' glyph='tag' /> {earnedBadges.length}
+        <Glyphicon className='skillPanelHeaderGlyph' glyph='star' /> {earnedStars}
+      </div>
       {categories.map((category) => {
         const categorySkills = skills.filter(skill => skill.categoryId === category.key);
         const categorySkillIds = categorySkills.map(skill => skill.key)
