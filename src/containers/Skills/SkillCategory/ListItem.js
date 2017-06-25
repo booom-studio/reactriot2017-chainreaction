@@ -17,7 +17,7 @@ export default ({
   const skillLevel = 1 + (
       skill.badges
           .map(b => b.key)
-          .findIndex(skillBadgeId => badgeIds.includes(skillBadgeId)) || 0
+          .findIndex(skillBadgeId => (badgeIds || []).includes(skillBadgeId)) || 0
       );
 
   const style = {
