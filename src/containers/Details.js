@@ -24,7 +24,6 @@ class BadgeSetDetails extends Component {
 
   render() {
     const badgeSetId = this.props.match.params.badgeSetId;
-    const badgeIds = this.props.badgeSet ? this.props.badgeSet.badgeIds : [];
     // badges where skillId in this.props.skills.map(x => x.id)
     return this.props.badgeSet ?
         <Grid>
@@ -40,7 +39,6 @@ class BadgeSetDetails extends Component {
               <Skills updateSkillLevel={this.updateSkillLevel}
                       skills={this.props.skills}
                       categories={this.props.categories}
-                      badgeIds={this.props.badgeSet.badgeIds}
                       badgeSet={this.props.badgeSet}
                       badges={this.props.badges}
               />

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Glyphicon, Collapse, Navbar } from 'react-bootstrap';
+
 import sortBy from 'lodash.sortby';
 import isEmpty from 'lodash.isempty';
 
-import { SkillContainer, SkillCategoryPanelHeader } from './skill';
+import SkillCategory from './SkillCategory';
+import Header from './Header';
+
 import './style.css';
 
 export default class Skills extends Component {
@@ -11,7 +13,7 @@ export default class Skills extends Component {
     badgeSet: {},
     panelOpen: {},
     panelShowsAll: {},
-    activeSkillId: false
+    activeSkillId: null
   };
 
   handleToggle = (key) => {
@@ -36,9 +38,8 @@ export default class Skills extends Component {
   render() {
     const skills = Object.keys(this.props.skills || {}).map(key => ({key, ...this.props.skills[key]}));
     const badges = Object.keys(this.props.badges || {}).map(key => ({key, ...this.props.badges[key]}));
-    const earnedBadges = Object.values(this.props.badgeIds).map(badgeId => this.props.badges[badgeId])
+    const earnedBadges = Object.values(this.props.badgeSet.badgeIds).map(badgeId => this.props.badges[badgeId])
       .filter(badge => !isEmpty(badge));
-    const earnedSkillIds = earnedBadges.map(badge => badge.skillId);
     const categories = Object.keys(this.props.categories || {}).map(key => {
       return {
         key,
@@ -49,48 +50,24 @@ export default class Skills extends Component {
       };
     });
     const earnedStars = earnedBadges.reduce((sum, {value}) => sum + value, 0);
-    return <div>
-      <Navbar>
-          <Navbar.Text>
-            ALPACCA WHATEVER
-          </Navbar.Text>
-          <Navbar.Text>
-            <Glyphicon className='skillPanelHeaderGlyph' glyph='tag' /> {earnedBadges.length}
-            <Glyphicon className='skillPanelHeaderGlyph' glyph='star' /> {earnedStars}
-          </Navbar.Text>
-      </Navbar>
-      {categories.map((category) => {
-        const categorySkillIds = category.skills.map(skill => skill.key);
-        const categoryBadges = earnedBadges.filter(badge => categorySkillIds.includes(badge.skillId));
-        const isOpen = this.state.panelOpen[category.key];
-        const showsAll = this.state.panelShowsAll[category.key];
-        return <div key={category.key} className="panel panel-default">
-          <SkillCategoryPanelHeader category={category}
-                                    earnedCategoryBadgeCount={categoryBadges.length}
-                                    earnedCategoryStarCount={
-                                      categoryBadges.reduce((sum, {value}) => sum + value, 0)}
-                                    handleToggle={this.handleToggle}
-                                    handleToggleShowAll={this.handleToggleShowAll}
-                                    isOpen={isOpen}
-                                    showsAll={showsAll}
+
+    return (
+      <div className='Skills'>
+        <Header profile='TODO: ALPACCA WHATEVER' badges={earnedBadges.length} stars={earnedStars} />
+        { categories.map(category =>(
+          <SkillCategory
+            category={category}
+            earnedBadges={earnedBadges}
+            key={category.key}
+            badgeSet={this.props.badgeSet}
+            updateSkillLevel={this.props.updateSkillLevel}
+            activeSkillId={this.state.activeSkillId}
+            onActivatedSkillChanged={skillId => {
+              this.setState({ activeSkillId: skillId })
+            }}
           />
-          <Collapse in={isOpen}>
-            <div className="panel-body">
-              {category.skills.map((skill, idx) => (
-                  <SkillContainer color={category.color}
-                                  key={skill.key}
-                                  skill={skill}
-                                  badgeIds={this.props.badgeIds}
-                                  showsAll={showsAll}
-                                  isEarned={earnedSkillIds.includes(skill.key)}
-                                  showsDetails={this.state.activeSkillId === skill.key}
-                                  updateSkillLevel={this.props.updateSkillLevel}
-                                  handleSelectSkillDetails={this.handleSelectSkillDetails} />
-              ))}
-            </div>
-          </Collapse>
-        </div>;
-      })}
-    </div>;
+        )) }
+      </div>
+    );
   }
 }
