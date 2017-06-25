@@ -14,7 +14,7 @@ export default class SearchField extends Component {
 
   handleSearch = (search) => {
     search = search === undefined ? this.state.search : search;
-    console.log(`Searching for "${search}"...`); // TODO
+    this.props.onSearch(search);
   }
 
   render() {

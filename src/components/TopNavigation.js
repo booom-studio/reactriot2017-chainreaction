@@ -14,7 +14,7 @@ export default class TopNavigation extends Component {
       </Navbar.Header>
       <ul className="nav navbar-nav pull-right">
         <li className='navbar-form'>
-          <SearchField />
+          <SearchField onSearch={this.props.onSearch} />
         </li>
       </ul>
     </Navbar>;
