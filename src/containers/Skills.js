@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Glyphicon, Collapse, Navbar, Nav, NavItem } from 'react-bootstrap';
 import './Skills.css';
-
+import Slider from '../components/Slider';
 import sortBy from 'lodash.sortby';
 
 const skillCategoryPanelHeader = ({
@@ -36,19 +36,20 @@ const skillContainer = ({
   showsDetails,
   showsAll,
   isEarned,
-  category,
+  color,
   handleSelectSkillDetails=()=>{}
-}) => (
-    <Collapse in={showsAll || isEarned}>
-      <div onClick={() => handleSelectSkillDetails(skill.key)}
-           key={skill.key}>
-        <strong>{JSON.stringify({skill}, null, 2)}</strong>
-        <Collapse in={!!showsDetails}>
-          <div>Details...</div>
-        </Collapse>
-      </div>
-    </Collapse>
-);
+}) => {
+  return <Collapse in={showsAll || isEarned}>
+    <div key={skill.key} onClick={() => handleSelectSkillDetails(skill.key)}>
+      <strong>{skill.name}</strong>
+      <Slider
+          levelCount={skill.badges.length}
+          color={color}
+          active={!!showsDetails}
+      />
+    </div>
+  </Collapse>
+};
 
 export default class Skills extends Component {
   state = {
@@ -123,6 +124,7 @@ export default class Skills extends Component {
           <Collapse in={isOpen}>
             <div className="panel-body">
               {category.skills.map((skill, idx) => skillContainer({
+                color: category.color,
                 skill,
                 showsAll,
                 isEarned: earnedSkillIds.includes(skill.key),
