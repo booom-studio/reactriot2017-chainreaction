@@ -1,56 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Glyphicon, Collapse, Navbar } from 'react-bootstrap';
-import './Skills.css';
-import Slider from '../components/Slider';
+import { Glyphicon, Collapse, Navbar } from 'react-bootstrap';
 import sortBy from 'lodash.sortby';
-
-const skillCategoryPanelHeader = ({
-  category,
-  handleToggle,
-  handleToggleShowAll,
-  isOpen,
-  showsAll,
-  earnedCategoryBadgeCount=0,
-  earnedCategoryStarCount=0
-}) => <span className='skillPanelHeader'>
-  <span onClick={() => handleToggle(category.key)}>
-    <Glyphicon glyph={`triangle-${isOpen ? 'top' : 'bottom'}`} style={{marginRight: 5}} />
-    {category.name}
-    <Glyphicon className='skillPanelHeaderGlyph' glyph='tag' /> {earnedCategoryBadgeCount}
-    <Glyphicon className='skillPanelHeaderGlyph' glyph='star' /> {earnedCategoryStarCount}
-  </span>
-
-  <span>
-    <Button type='button' bsSize={'sm'} className='skillPanelHeaderButton'>
-      <Glyphicon glyph='plus' /> Add
-    </Button>
-    <Button onClick={() => handleToggleShowAll(category.key)}
-        type='button' bsSize={'sm'} className='skillPanelHeaderButton'>
-      <Glyphicon glyph='tag' /> {showsAll ? 'Hide unused' : 'See all skills'}
-    </Button>
-  </span>
-</span>;
-
-const skillContainer = ({
-  skill,
-  showsDetails,
-  showsAll,
-  isEarned,
-  color,
-  handleSelectSkillDetails=()=>{}
-}) => {
-  return <Collapse key={skill.key} in={showsAll || isEarned}>
-    <div onClick={() => handleSelectSkillDetails(skill.key)}>
-      <strong>{skill.name}</strong>
-      <Slider
-          currentLevel={1}
-          levelCount={skill.badges.length}
-          color={color}
-          active={!!showsDetails}
-      />
-    </div>
-  </Collapse>
-};
+import { skillContainer, skillCategoryPanelHeader } from './skill';
+import './style.css';
 
 export default class Skills extends Component {
   state = {
@@ -109,17 +61,15 @@ export default class Skills extends Component {
         const isOpen = this.state.panelOpen[category.key];
         const showsAll = this.state.panelShowsAll[category.key];
         return <div key={category.key} className="panel panel-default">
-          <div className="panel-heading" style={{backgroundColor: category.color}}>
-            {skillCategoryPanelHeader({
-              category,
-              earnedCategoryBadgeCount: categoryBadges.length,
-              earnedCategoryStarCount: categoryBadges.reduce((sum, {value}) => sum + value, 0),
-              handleToggle: this.handleToggle,
-              handleToggleShowAll: this.handleToggleShowAll,
-              isOpen,
-              showsAll
-            })}
-          </div>
+          {skillCategoryPanelHeader({
+            category,
+            earnedCategoryBadgeCount: categoryBadges.length,
+            earnedCategoryStarCount: categoryBadges.reduce((sum, {value}) => sum + value, 0),
+            handleToggle: this.handleToggle,
+            handleToggleShowAll: this.handleToggleShowAll,
+            isOpen,
+            showsAll
+          })}
           <Collapse in={isOpen}>
             <div className="panel-body">
               {category.skills.map((skill, idx) => skillContainer({

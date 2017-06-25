@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Row, Col, Glyphicon } from 'react-bootstrap';
 
 import UserBadgeSet from './UserBadgeSet';
-import Skills from './Skills';
+import Skills from './Skills/index';
 
 class BadgeSetDetails extends Component {
   render() {
