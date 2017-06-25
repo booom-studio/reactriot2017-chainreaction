@@ -24,6 +24,7 @@ export default class Slider extends React.Component {
     active: PropTypes.bool,
 
     onChange: PropTypes.func,
+    onAfterChange: PropTypes.func,
     onDelete: PropTypes.func
   };
 
@@ -62,14 +63,18 @@ export default class Slider extends React.Component {
   }
 
   render() {
-    const { color } = this.props;
+    const { color, onChange, onAfterChange } = this.props;
 
     return (
       <div className={classNames('Slider', { active: this.props.active })}>
         <RCSlider
           onAfterChange={(newLevel) => {
-            this.props.onChange(newLevel, this.state.currentLevel);
+            this.props.onAfterChange(newLevel, this.state.currentLevel);
             this.setState({currentLevel: newLevel})
+          }}
+          onChange={newLevel => {
+            this.setState({currentLevel: newLevel})
+            onChange(newLevel);
           }}
           style={{ borderColor: color, color }}
           trackStyle={{ backgroundColor: color }}

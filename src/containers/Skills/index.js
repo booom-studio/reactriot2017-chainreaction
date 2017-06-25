@@ -31,7 +31,7 @@ export default class Skills extends Component {
 
   handleSelectSkillDetails = (skillId) => {
     this.setState({
-      activeSkillId: skillId === this.state.activeSkillId ? false : skillId
+      activeSkillId: skillId === this.state.activeSkillId ? null : skillId
     });
   };
 
@@ -54,19 +54,19 @@ export default class Skills extends Component {
     return (
       <div className='Skills'>
         <Header profile='TODO: ALPACCA WHATEVER' badges={earnedBadges.length} stars={earnedStars} />
-        { categories.map(category =>(
-          <SkillCategory
-            category={category}
-            earnedBadges={earnedBadges}
-            key={category.key}
-            badgeSet={this.props.badgeSet}
-            updateSkillLevel={this.props.updateSkillLevel}
-            activeSkillId={this.state.activeSkillId}
-            onActivatedSkillChanged={skillId => {
-              this.setState({ activeSkillId: skillId })
-            }}
-          />
-        )) }
+        <div className='list'>
+          { categories.map(category =>(
+            <SkillCategory
+              category={category}
+              earnedBadges={earnedBadges}
+              key={category.key}
+              badgeSet={this.props.badgeSet}
+              updateSkillLevel={this.props.updateSkillLevel}
+              activeSkillId={this.state.activeSkillId}
+              onActivatedSkillChanged={this.handleSelectSkillDetails}
+            />
+          )) }
+        </div>
       </div>
     );
   }
