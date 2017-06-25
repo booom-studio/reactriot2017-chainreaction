@@ -17,7 +17,8 @@ class BadgeSetDetails extends Component {
     const skillBadgeIds = Object.keys(this.props.badges).filter(badgeId => (
       this.props.badges[badgeId] || {}).skillId === skillId
     );
-    const newBadgeIds = badgeIds.filter(badgeId => !skillBadgeIds.includes(badgeId)).concat([newKey]);
+    const newBadgeIds = badgeIds.filter(badgeId => !skillBadgeIds.includes(badgeId))
+        .concat([newKey]).filter(key => key);
     Firebase.database().ref(ref).set(newBadgeIds);
   }
 
